@@ -3,7 +3,7 @@ import { materialCreate } from "../utils/loadMaterial.js";
 import { wallsData } from "../utils/walls.js";
 
 export const createWalls = (scene) => {
-  const wallMaterial = materialCreate("texture-walls.jpg", 2, 2);
+  const wallMaterial = materialCreate("texture-walls.webp", 10, 10);
   const wallGroup = new THREE.Group();
 
   wallsData.forEach((w) => {
@@ -24,7 +24,7 @@ export const createWalls = (scene) => {
 
   scene.add(wallGroup);
 
-  // Opcional: Log para verificar las paredes creadas
+   //Log para verificar las paredes creadas
   if (wallGroup.children.length === 0) {
     console.warn("No walls were created to calculate bounding boxes.");
   }

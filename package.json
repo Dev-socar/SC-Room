@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "three": "^0.170.0",
+    "three-mesh-bvh": "^0.8.3",
     "three-stdlib": "^2.34.0"
   }
 }
