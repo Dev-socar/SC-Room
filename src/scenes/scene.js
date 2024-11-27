@@ -7,9 +7,9 @@ export const createScene = () => {
 
   // Luces
   scene.add(createAmbientLight());
-  const { light, target } = createDirectionalLight();
-  scene.add(light);
-  scene.add(target);
+  // const { light, target } = createDirectionalLight();
+  // scene.add(light);
+  // scene.add(target);
 
   return scene;
 };

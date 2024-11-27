@@ -8,9 +8,9 @@ import { loadCeilingLampsLight } from "./lights/ceilingLampsLight.js";
 import { createWalls, wallsBbox } from "./walls/createWall.js";
 import { materialCreate } from "./utils/loadMaterial.js";
 
-let scene, camera, renderer, controls, walls;
-
-const MIN_DISTANCE = 5;
+let scene, camera, renderer, controls, walls; // Declaramos raycaster aquí
+let raycaster, intersects;
+let paintings = []; // Guardamos las pinturas en un array para poder manejar las interacciones
 const MIN_CAMERA_Y = 0;
 const MAX_CAMERA_Y = 0;
 
@@ -84,6 +84,63 @@ async function init() {
   ceiling.position.y = 3.5;
   scene.add(ceiling);
 
+  // Pinturas
+  function createPainting(url, w, h, p, info) {
+    const textureLoader = new THREE.TextureLoader();
+    const paintingTexture = textureLoader.load(url);
+    const paintingMaterial = new THREE.MeshStandardMaterial({
+      map: paintingTexture,
+      transparent: true,
+    });
+    const paintingGeometry = new THREE.BoxGeometry(w, h, 0.1);
+    const painting = new THREE.Mesh(paintingGeometry, paintingMaterial);
+    painting.position.set(p.x, p.y, p.z);
+
+    painting.info = info; // Almacenar información en el objeto pintura
+
+    return painting;
+  }
+
+  const painting1 = createPainting(
+    "/imagenes/principal/frontal/logo-fmat.webp",
+    3.5,
+    2,
+    new THREE.Vector3(0, 0, -7.1),
+    "Logo de la Facultad de Matemáticas"
+  );
+  scene.add(painting1);
+
+  const painting2 = createPainting(
+    "/imagenes/principal/frontal/mision-fmat.webp",
+    3.5,
+    2,
+    new THREE.Vector3(5, 0, -7.1),
+    "Misión de la Facultad de Matemáticas"
+  );
+  scene.add(painting2);
+
+  const painting3 = createPainting(
+    "/imagenes/principal/frontal/vision-fmat.webp",
+    3.5,
+    2,
+    new THREE.Vector3(-5, 0, -7.1),
+    "Visión de la Facultad de Matemáticas"
+  );
+  scene.add(painting3);
+
+  // Agregar pinturas al arreglo
+  paintings.push(painting1, painting2, painting3);
+
+  // Configuración de la luz puntual
+  const spotLight = new THREE.SpotLight(0xffffff, 40); // Luz blanca con intensidad 1
+  spotLight.position.set(0, 5, -7); // Posición en el techo sobre el cuadro
+  spotLight.target.position.set(0, 0, -7.1); // Apunta hacia el cuadro
+  spotLight.angle = Math.PI / 6; // Ángulo del haz
+  spotLight.penumbra = 0.5; // Suavidad en los bordes del haz
+  spotLight.castShadow = true; // Generar sombras si es necesario
+  scene.add(spotLight);
+  scene.add(spotLight.target);
+
   // Configurar controles
   controls = new PointerLockControls(camera, document.body);
 
@@ -92,6 +149,8 @@ async function init() {
 
   controls.addEventListener("unlock", showMenu);
   document.addEventListener("keydown", onKeyDown, false);
+
+  raycaster = new THREE.Raycaster(); // Raycaster para detectar interacciones
 
   animate();
 }
@@ -204,8 +263,42 @@ function checkCollision(position) {
 // Función de animación
 function animate() {
   requestAnimationFrame(animate);
+
+  // Actualizar el origen y la dirección del rayo
+  const direction = new THREE.Vector3(); // Dirección del rayo
+  camera.getWorldDirection(direction); // Obtiene la dirección desde la cámara
+
+  // Configurar el raycaster
+  raycaster.ray.origin.copy(camera.position); // Establece el origen en la posición de la cámara
+  raycaster.ray.direction.copy(direction); // Establece la dirección en la dirección de la cámara
+
+  // Realizar la intersección con las pinturas
+  intersects = raycaster.intersectObjects(paintings);
+
+  if (intersects.length > 0) {
+    const painting = intersects[0].object;
+    showPopup(painting.info); // Mostrar información de la pintura
+  } else {
+    hidePopup(); // Ocultar popup si no hay intersección
+  }
+
+  
+
   renderer.render(scene, camera);
 }
 
-// Inicializar la escena
+
+// Mostrar el popup con la información de la pintura
+function showPopup(info) {
+  const popup = document.querySelector("#popup");
+  popup.textContent = info;
+  popup.style.display = "block";
+}
+
+// Ocultar el popup
+function hidePopup() {
+  const popup = document.querySelector("#popup");
+  popup.style.display = "none";
+}
+
 init();
