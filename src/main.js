@@ -7,10 +7,10 @@ import { loadCeilingLamps } from "./loaders/ceilingLamps.js";
 import { loadCeilingLampsLight } from "./lights/ceilingLampsLight.js";
 import { createWalls, wallsBbox } from "./walls/createWall.js";
 import { materialCreate } from "./utils/loadMaterial.js";
+import { createPainting, paintings } from "./paintings/createPainting.js";
 
 let scene, camera, renderer, controls, walls; // Declaramos raycaster aquí
 let raycaster, intersects;
-let paintings = []; // Guardamos las pinturas en un array para poder manejar las interacciones
 const MIN_CAMERA_Y = 0;
 const MAX_CAMERA_Y = 0;
 
@@ -85,51 +85,7 @@ async function init() {
   scene.add(ceiling);
 
   // Pinturas
-  function createPainting(url, w, h, p, info) {
-    const textureLoader = new THREE.TextureLoader();
-    const paintingTexture = textureLoader.load(url);
-    const paintingMaterial = new THREE.MeshStandardMaterial({
-      map: paintingTexture,
-      transparent: true,
-    });
-    const paintingGeometry = new THREE.BoxGeometry(w, h, 0.1);
-    const painting = new THREE.Mesh(paintingGeometry, paintingMaterial);
-    painting.position.set(p.x, p.y, p.z);
-
-    painting.info = info; // Almacenar información en el objeto pintura
-
-    return painting;
-  }
-
-  const painting1 = createPainting(
-    "/imagenes/principal/frontal/logo-fmat.webp",
-    3.5,
-    2,
-    new THREE.Vector3(0, 0, -7.1),
-    "Logo de la Facultad de Matemáticas"
-  );
-  scene.add(painting1);
-
-  const painting2 = createPainting(
-    "/imagenes/principal/frontal/mision-fmat.webp",
-    3.5,
-    2,
-    new THREE.Vector3(5, 0, -7.1),
-    "Misión de la Facultad de Matemáticas"
-  );
-  scene.add(painting2);
-
-  const painting3 = createPainting(
-    "/imagenes/principal/frontal/vision-fmat.webp",
-    3.5,
-    2,
-    new THREE.Vector3(-5, 0, -7.1),
-    "Visión de la Facultad de Matemáticas"
-  );
-  scene.add(painting3);
-
-  // Agregar pinturas al arreglo
-  paintings.push(painting1, painting2, painting3);
+  createPainting(scene);
 
   // Configuración de la luz puntual
   const spotLight = new THREE.SpotLight(0xffffff, 40); // Luz blanca con intensidad 1
@@ -282,11 +238,8 @@ function animate() {
     hidePopup(); // Ocultar popup si no hay intersección
   }
 
-  
-
   renderer.render(scene, camera);
 }
-
 
 // Mostrar el popup con la información de la pintura
 function showPopup(info) {
