@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { materialCreate } from "../utils/loadMaterial.js";
 import { wallsData } from "./wallsData.js";
 
-export const createWalls = (scene) => {
+export const createWalls = async (scene) => {
   const wallMaterial = materialCreate("texture-walls.webp", 10, 10);
   const wallGroup = new THREE.Group();
 
@@ -33,7 +33,7 @@ export const createWalls = (scene) => {
 };
 
 
-export const wallsBbox = (wallGroup) => {
+export const wallsBbox = async (wallGroup) => {
   if (!wallGroup || !wallGroup.children) {
     console.error("Invalid wall group provided to wallsBbox.");
     return [];

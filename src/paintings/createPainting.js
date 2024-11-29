@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { paintingsData } from "./paintingsData.js"; // Importa el array con los datos de las pinturas
 let paintings = []; // Declaramos el array en este archivo
 // Función para crear una pintura
-export function createPainting(scene) {
+export async function createPainting(scene) {
   paintingsData.forEach(({ url, w, h, p, r,info }) => {
     const [rotX, rotY, rotZ] = r || [0, 0, 0];
     const textureLoader = new THREE.TextureLoader();

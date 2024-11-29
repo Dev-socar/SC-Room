@@ -2,7 +2,6 @@ import * as THREE from "three";
 import { PointerLockControls } from "three-stdlib";
 import { createScene } from "./scenes/scene.js";
 import { createMaterial } from "./utils/materials.js";
-import { loadFBXModel } from "./loaders/fbxLoader.js";
 import { loadCeilingLamps } from "./loaders/ceilingLamps.js";
 import { loadCeilingLampsLight } from "./lights/ceilingLampsLight.js";
 import { createWalls, wallsBbox } from "./walls/createWall.js";
@@ -17,6 +16,8 @@ const MIN_CAMERA_Y = 0;
 const MAX_CAMERA_Y = 0;
 
 async function init() {
+  const overlay = document.querySelector("#overlay");
+
   // Crear escena, cámara y renderizador
   scene = createScene();
 
@@ -48,26 +49,34 @@ async function init() {
   await loadCeilingLampsLight(scene);
 
   // Crear el piso
-  const materialFloor = materialCreate("texture-floor.webp", 10, 10);
-  const floorGeometry = new THREE.PlaneGeometry(70, 55);
-  const floor = new THREE.Mesh(floorGeometry, materialFloor);
-  floor.rotation.x = Math.PI / 2;
-  floor.position.y = -Math.PI;
-  scene.add(floor);
+  async function createFloor(scene) {
+    const materialFloor = materialCreate("texture-floor.webp", 10, 10);
+    const floorGeometry = new THREE.PlaneGeometry(70, 55);
+    const floor = new THREE.Mesh(floorGeometry, materialFloor);
+    floor.rotation.x = Math.PI / 2;
+    floor.position.y = -Math.PI;
+    scene.add(floor);
+  }
+
+  await createFloor(scene)
+  
 
   // Crear paredes y techo
-  const wallGroup = createWalls(scene);
-  walls = wallsBbox(wallGroup);
+  const wallGroup = await createWalls(scene);
+  walls = await wallsBbox(wallGroup);
 
-  const materialCeiling = materialCreate("texture-ceiling.webp", 10, 10);
-  const ceilingGeometry = new THREE.PlaneGeometry(70, 55);
-  const ceiling = new THREE.Mesh(ceilingGeometry, materialCeiling);
-  ceiling.rotation.x = Math.PI / 2;
-  ceiling.position.y = 3.5;
-  scene.add(ceiling);
+  async function createCeiling(scene) {
+    const materialCeiling = materialCreate("texture-ceiling.webp", 10, 10);
+    const ceilingGeometry = new THREE.PlaneGeometry(70, 55);
+    const ceiling = new THREE.Mesh(ceilingGeometry, materialCeiling);
+    ceiling.rotation.x = Math.PI / 2;
+    ceiling.position.y = 3.5;
+    scene.add(ceiling);
+  }
+  await createCeiling(scene)
 
   // Pinturas con luces
-  createPainting(scene);
+  await createPainting(scene);
 
   // Configurar controles
   controls = new PointerLockControls(camera, document.body);
@@ -81,6 +90,11 @@ async function init() {
   raycaster = new THREE.Raycaster(); // Raycaster para detectar interacciones
 
   animate();
+
+  setTimeout(() => {
+    // Una vez que todo está cargado
+    hideOverlay(overlay);
+  }, 500);
 }
 
 // Función para ajustar el tamaño de la ventana
@@ -239,5 +253,13 @@ function hidePopup() {
   popup.style.display = "none";
 }
 
+// Función para ocultar el overlay
+function hideOverlay(overlay) {
+  overlay.style.transition = "opacity 0.5s ease"; 
+  overlay.style.opacity = 0; 
+  setTimeout(() => {
+    overlay.style.display = "none"; 
+  }, 500); 
+}
 
-document.addEventListener('DOMContentLoaded',init)
+document.addEventListener("DOMContentLoaded", init);
