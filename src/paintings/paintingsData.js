@@ -40,12 +40,28 @@ export const paintingsData = [
     info: `<h1 class="text-center text-3xl">Momentos FMAT</h1>`,
   },
   {
+    url: "/imagenes/principal/laterales/SA.png",
+    w: 2.5,
+    h: 2.5,
+    p: new THREE.Vector3(15.2, 0, -4.5),
+    r: [0, Math.PI / 2, 0],
+    info: `<h1 class="text-center text-3xl">Sociedad de Alumnos FMAT</h1>`,
+  },
+  {
     url: "/imagenes/principal/laterales/collage-02.png",
     w: 3.5,
     h: 2,
     p: new THREE.Vector3(-15.2, 0, -4.5),
     r: [0, Math.PI / 2, 0],
     info: `<h1 class="text-center text-3xl">Momentos FMAT</h1>`,
+  },
+  {
+    url: "/imagenes/principal/laterales/consejo.png",
+    w: 2.5,
+    h: 2.5,
+    p: new THREE.Vector3(-15.2, 0, 4.5),
+    r: [0, Math.PI / 2, 0],
+    info: `<h1 class="text-center text-3xl">Consejo Estudiantil FMAT</h1>`,
   },
   //LCC
   {
@@ -341,7 +357,7 @@ export const paintingsData = [
     `,
   },
   {
-    url: "/imagenes/LEM/modelo.png",
+    url: "/imagenes/LEM/didactico.png",
     w: 3.5,
     h: 2,
     p: new THREE.Vector3(-8, 0, 17.5),
