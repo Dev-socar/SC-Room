@@ -216,12 +216,15 @@ function checkCollision(position) {
   return false;
 }
 
+// Definir una constante para la distancia mínima para mostrar el popup
+const DISTANCIA_MINIMA = 3.5; // Ajusta este valor según sea necesario
+
 // Función de animación
 function animate() {
   requestAnimationFrame(animate);
 
-  // Actualizar el origen y la dirección del rayo
-  const direction = new THREE.Vector3(); // Dirección del rayo
+ 
+  const direction = new THREE.Vector3(); 
   camera.getWorldDirection(direction); // Obtiene la dirección desde la cámara
 
   // Configurar el raycaster
@@ -233,7 +236,16 @@ function animate() {
 
   if (intersects.length > 0) {
     const painting = intersects[0].object;
-    showPopup(painting.info); // Mostrar información de la pintura
+
+    // Calcular la distancia entre la cámara y la pintura
+    const distance = camera.position.distanceTo(painting.position);
+
+    // Mostrar el popup solo si la distancia es menor que el umbral definido
+    if (distance < DISTANCIA_MINIMA) {
+      showPopup(painting.info); // Mostrar información de la pintura
+    } else {
+      hidePopup(); // Ocultar popup si la distancia es mayor que el umbral
+    }
   } else {
     hidePopup(); // Ocultar popup si no hay intersección
   }
@@ -244,8 +256,9 @@ function animate() {
 // Mostrar el popup con la información de la pintura
 function showPopup(info) {
   const popup = document.querySelector("#popup");
-  popup.textContent = info;
+  popup.innerHTML = info;
   popup.style.display = "block";
+  popup.style.width = "400px";
 }
 
 // Ocultar el popup

@@ -144,3 +144,5 @@ export const wallsData = [
     rotation: [0, Math.PI / 2, 0],
   },
 ];
+
+
