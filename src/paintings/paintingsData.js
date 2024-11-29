@@ -1,5 +1,6 @@
 import * as THREE from "three";
 export const paintingsData = [
+  //frontal
   {
     url: "/imagenes/principal/frontal/logo-fmat.webp",
     w: 3.5,
@@ -21,7 +22,39 @@ export const paintingsData = [
     p: new THREE.Vector3(-5, 0, -7.1),
     info: `<h1 class="text-center text-3xl">Visión de la Facultad de Matemáticas</h1>`,
   },
+  //Trasero
+  {
+    url: "/imagenes/principal/trasera/historia-fmat.png",
+    w: 10,
+    h: 5,
+    p: new THREE.Vector3(0, 0, 7.1),
+    info: `<h1 class="text-center text-3xl">Historia de la Facultad de Matemáticas</h1>`,
+  },
+  //Laterales collage
+  {
+    url: "/imagenes/principal/laterales/collage-01.png",
+    w: 3.5,
+    h: 2,
+    p: new THREE.Vector3(15.2, 0, 4.5),
+    r: [0, Math.PI / 2, 0],
+    info: `<h1 class="text-center text-3xl">Momentos FMAT</h1>`,
+  },
+  {
+    url: "/imagenes/principal/laterales/collage-02.png",
+    w: 3.5,
+    h: 2,
+    p: new THREE.Vector3(-15.2, 0, -4.5),
+    r: [0, Math.PI / 2, 0],
+    info: `<h1 class="text-center text-3xl">Momentos FMAT</h1>`,
+  },
   //LCC
+  {
+    url: "/imagenes/LCC/plan.png",
+    w: 3.5,
+    h: 2,
+    p: new THREE.Vector3(19, 0, -7.8),
+    info: `<h1 class="text-center text-3xl">Plan de Estudios Licenciatura en Ciencias de la Computación</h1>`,
+  },
   {
     url: "/imagenes/LCC/objetivo-LCC.png",
     w: 3.5,
@@ -130,6 +163,14 @@ export const paintingsData = [
   },
   //LA
   {
+    url: "/imagenes/LA/plan.png",
+    w: 3.5,
+    h: 2,
+    p: new THREE.Vector3(15.8, 0, 4.25),
+    r: [0, Math.PI / 2, 0],
+    info: `<h1 class="text-center text-3xl">Plan de Estudios Licenciatura en Actuaria</h1>`,
+  },
+  {
     url: "/imagenes/LA/objetivo-LA.png",
     w: 3.5,
     h: 2,
@@ -237,6 +278,7 @@ export const paintingsData = [
     `,
   },
   //LEM
+
   {
     url: "/imagenes/LEM/objetivo-LEM.png",
     w: 3.5,
@@ -346,6 +388,14 @@ export const paintingsData = [
     `,
   },
   //LM
+  {
+    url: "/imagenes/LM/plan.png",
+    w: 3.5,
+    h: 2,
+    p: new THREE.Vector3(-15.8, 0, -4.25),
+    r: [0, Math.PI / 2, 0],
+    info: `<h1 class="text-center text-3xl">Plan de Estudios Licenciatura en Matemáticas</h1>`,
+  },
   {
     url: "/imagenes/LM/objetivo-LM.png",
     w: 3.5,
@@ -457,6 +507,13 @@ export const paintingsData = [
     `,
   },
   //LIS
+  {
+    url: "/imagenes/LIS/plan.png",
+    w: 3.5,
+    h: 2,
+    p: new THREE.Vector3(19, 0, 7.8),
+    info: `<h1 class="text-center text-3xl">Plan de Estudios Licenciatura en Ingeniería de Software</h1>`,
+  },
   {
     url: "/imagenes/LIS/objetivo-LIS.png",
     w: 3.5,
@@ -595,6 +652,13 @@ export const paintingsData = [
     `,
   },
   //LIC
+  {
+    url: "/imagenes/LIC/plan.png",
+    w: 3.5,
+    h: 2,
+    p: new THREE.Vector3(-19, 0, -7.8),
+    info: `<h1 class="text-center text-3xl">Plan de Estudios Licenciatura en Ingeniería de Software</h1>`,
+  },
   {
     url: "/imagenes/LIC/objetivo-LIC.png",
     w: 3.5,

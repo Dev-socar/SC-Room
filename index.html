@@ -1,45 +1,61 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/fmat.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css">
     <title>Science Computer Room</title>
-  </head>
-  <body>
-    
-      <div id="menu">
-          <div id="img_container">
-              <img src="/menu-bg.jpg" alt="Menu bg">
-          </div>
+</head>
 
-          <div id="content">
-              <h1>Facultad de Matematicas</h1>
-              <div>
-                  <p>Aqui podras conocer a cerca de las Licenciaturas de la Facultad de Matematicas.</p>
-                  <p>UADY FMAT</p>
-              </div>
+<body>
 
-              <div>
-                  <p>Instrucciones</p>
-                  <p>W/A/S/D para moverte</p>
-                  <p>Mira con el cursor alrededor</p>
-              </div>
+    <div id="menu">
+        <div id="img_container">
+            <img src="/menu-bg.jpg" alt="Menu bg">
+        </div>
 
-              <div id="play_button">
-                  <p>Iniciar</p>
-              </div>
-          </div>
-      </div>
-  
-<div id="popup"
-    style="display:none; position: fixed; bottom: 20px; left: 20px; background: rgba(0, 0, 0, 0.8); color: white; padding: 10px; border-radius: 5px; width: 400;">
-</div>
+        <div id="content">
+            <h1 class="text-4xl font-semibold uppercase">Facultad de Matemáticas</h1>
+            <div class="my-3">
+                <p class="text-3xl my-3">Aquí podrás conocer a cerca de las Licenciaturas de la Facultad de Matemáticas.
+                </p>
+            </div>
+
+            <div class="mb-3">
+                <p class="text-3xl mb-5">Controles</p>
+                <div class="flex justify-center gap-4 items-center  mx-auto">
+                    <div class="grid grid-cols-3 gap-3  ">
+                        <div></div>
+                        <p class="text-2xl text-center"><kbd class="bg-gray-300 rounded-lg font-bold p-1.5">W</kbd> </p>
+                        <div></div>
+                        <p class="text-2xl text-center"><kbd class="bg-gray-300 rounded-lg font-bold p-1.5">A</kbd></p>
+                        <p class="text-2xl text-center"><kbd class="bg-gray-300 rounded-lg font-bold p-1.5">S</kbd> </p>
+                        <p class="text-2xl text-center"><kbd class="bg-gray-300 rounded-lg font-bold p-1.5">D</kbd> </p>
+                    </div>
+                    <div class="flex gap-4 flex-col justify-center items-start">
+                        <p class="text-2xl"><kbd class="bg-gray-300 rounded-lg font-bold p-1.5">esc</kbd> Pausar</p>
+                        <p class="text-2xl"><kbd class="bg-gray-300 rounded-lg font-bold p-1.5">Mouse</kbd> Mover la
+                            Cámara</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <button id="play_button"
+                class="bg-blue-600 text-white uppercase font-semibold text-2xl p-2 rounded-lg mt-5">Iniciar</button>
+        </div>
+    </div>
+
+    <div id="popup"
+        style="display:none; position: fixed; bottom: 20px; left: 20px; background: rgba(0, 0, 0, 0.8); color: white; padding: 10px; border-radius: 5px; width: 400;">
+    </div>
 
 
-  
+
 
     <script type="module" src="/src/main.js"></script>
-  </body>
+</body>
+
 </html>

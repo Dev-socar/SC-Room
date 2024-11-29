@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { materialCreate } from "../utils/loadMaterial.js";
-import { wallsData } from "../utils/walls.js";
+import { wallsData } from "./wallsData.js";
 
 export const createWalls = (scene) => {
   const wallMaterial = materialCreate("texture-walls.webp", 10, 10);

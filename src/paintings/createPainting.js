@@ -15,13 +15,11 @@ export function createPainting(scene) {
     const painting = new THREE.Mesh(paintingGeometry, paintingMaterial);
     painting.position.set(p.x, p.y, p.z);
     painting.rotation.set(rotX, rotY, rotZ);
-
-    painting.info = info; // Guardamos la info de la pintura en el objeto
-
-    paintings.push(painting); // Guardamos la pintura en el array
+    painting.info = info; 
+    paintings.push(painting); 
 
     scene.add(painting);
   });
 }
-// Exportamos el array de pinturas para poder acceder a él en el archivo principal
+
 export { paintings };

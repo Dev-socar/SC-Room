@@ -1,6 +1,6 @@
 import { createRectangularPanel } from "./rectAreaLights.js";
 
-export const loadCeilingLampsLight = (scene) => {
+export const loadCeilingLampsLight = async (scene) => {
   const lights = [
     { position: [-4, 2.85, -2] },
     { position: [-4, 2.85, 2]},

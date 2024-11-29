@@ -9,7 +9,9 @@ import { createWalls, wallsBbox } from "./walls/createWall.js";
 import { materialCreate } from "./utils/loadMaterial.js";
 import { createPainting, paintings } from "./paintings/createPainting.js";
 
-let scene, camera, renderer, controls, walls; // Declaramos raycaster aquí
+import Stats from "stats.js";
+
+let scene, camera, renderer, controls, walls, stats; // Declaramos raycaster aquí
 let raycaster, intersects;
 const MIN_CAMERA_Y = 0;
 const MAX_CAMERA_Y = 0;
@@ -31,39 +33,19 @@ async function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
+  // Configurar Stats.js
+  stats = new Stats();
+  stats.showPanel(0); // 0: FPS, 1: MS, 2: MB
+  document.body.appendChild(stats.dom);
+
   window.addEventListener("resize", onWindowResize);
 
   // Material
   const material = createMaterial();
 
-  // Cargar modelos de sillas
-  try {
-    await Promise.all([
-      loadFBXModel(
-        "/modelos-3D/silla.fbx",
-        material,
-        [4, -3, 0],
-        [0.02, 0.02, 0.02],
-        Math.PI / 2,
-        scene
-      ),
-      loadFBXModel(
-        "/modelos-3D/silla.fbx",
-        material,
-        [-4, -3, 0],
-        [0.02, 0.02, 0.02],
-        -Math.PI / 2,
-        scene
-      ),
-    ]);
-    console.log("Modelos de sillas cargados");
-  } catch (error) {
-    console.error("Error al cargar los modelos de sillas:", error);
-  }
-
   // Cargar lámparas y luces
   await loadCeilingLamps(scene, material);
-  loadCeilingLampsLight(scene);
+  await loadCeilingLampsLight(scene);
 
   // Crear el piso
   const materialFloor = materialCreate("texture-floor.webp", 10, 10);
@@ -84,18 +66,8 @@ async function init() {
   ceiling.position.y = 3.5;
   scene.add(ceiling);
 
-  // Pinturas
+  // Pinturas con luces
   createPainting(scene);
-
-  // Configuración de la luz puntual
-  const spotLight = new THREE.SpotLight(0xffffff, 40); // Luz blanca con intensidad 1
-  spotLight.position.set(0, 5, -7); // Posición en el techo sobre el cuadro
-  spotLight.target.position.set(0, 0, -7.1); // Apunta hacia el cuadro
-  spotLight.angle = Math.PI / 6; // Ángulo del haz
-  spotLight.penumbra = 0.5; // Suavidad en los bordes del haz
-  spotLight.castShadow = true; // Generar sombras si es necesario
-  scene.add(spotLight);
-  scene.add(spotLight.target);
 
   // Configurar controles
   controls = new PointerLockControls(camera, document.body);
@@ -221,10 +193,10 @@ const DISTANCIA_MINIMA = 3.5; // Ajusta este valor según sea necesario
 
 // Función de animación
 function animate() {
+  stats.begin(); // Inicia el monitoreo
   requestAnimationFrame(animate);
 
- 
-  const direction = new THREE.Vector3(); 
+  const direction = new THREE.Vector3();
   camera.getWorldDirection(direction); // Obtiene la dirección desde la cámara
 
   // Configurar el raycaster
@@ -249,7 +221,7 @@ function animate() {
   } else {
     hidePopup(); // Ocultar popup si no hay intersección
   }
-
+  stats.end(); // Finaliza el monitoreo
   renderer.render(scene, camera);
 }
 
@@ -267,4 +239,5 @@ function hidePopup() {
   popup.style.display = "none";
 }
 
-init();
+
+document.addEventListener('DOMContentLoaded',init)
